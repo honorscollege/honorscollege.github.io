@@ -6,22 +6,26 @@
   <title>Honors College Calendar</title>
 </head>
 <body>
-  <h1>Honors College Calendar</h1>
+  <h1>Upcoming Honors College Events</h1>
   <ul id="events"></ul>
 
   <script>
-    const apiKey = 'AIzaSyAHkRmjW_Gs-nQaDF7mZgQbh2UqeTnHJeU';
-    const calendarId = 'honors@regent.edu';
+    const apiKey = 'AIzaSyAHkRmjW_Gs-nQaDF7mZgQbh2UqeTnHJeU';  // Replace with your API key
+    const calendarId = 'honors@regent.edu';  // Calendar ID
 
-    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`)
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}&timeMin=${new Date().toISOString()}&maxResults=10&singleEvents=true&orderBy=startTime`)
       .then(response => response.json())
       .then(data => {
         const eventsList = document.getElementById('events');
-        data.items.forEach(event => {
-          const listItem = document.createElement('li');
-          listItem.textContent = `${event.summary} (Start: ${event.start.dateTime || event.start.date})`;
-          eventsList.appendChild(listItem);
-        });
+        if (data.items && data.items.length) {
+          data.items.forEach(event => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${event.summary} (Start: ${event.start.dateTime || event.start.date})`;
+            eventsList.appendChild(listItem);
+          });
+        } else {
+          eventsList.textContent = 'No upcoming events found.';
+        }
       })
       .catch(error => console.error('Error fetching events:', error));
   </script>
