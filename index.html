@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Honors Calendar</title>
+  <title>Honors College Calendar</title>
 </head>
 <body>
-  <h1>Upcoming Events</h1>
+  <h1>Honors College Calendar</h1>
   <ul id="events"></ul>
 
   <script>
-    const apiKey = 'YOUR_API_KEY';
+    const apiKey = 'AIzaSyAHkRmjW_Gs-nQaDF7mZgQbh2UqeTnHJeU';
     const calendarId = 'honors@regent.edu';
 
     fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${apiKey}`)
