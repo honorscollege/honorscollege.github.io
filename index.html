@@ -1,12 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Honors College Calendar</title>
+    <title>Honors College Calendar Public Data</title>
 </head>
 <body>
-  <h1>Upcoming Honors College Events</h1>
-  
+    <div id="calendar"></div>
+    <script>
+        function loadCalendar() {
+            const calendarUrl = "https://www.googleapis.com/calendar/v3/calendars/honors%40regent.edu/events?key=YOUR_API_KEY";
+            fetch(calendarUrl)
+                .then(response => response.json())
+                .then(data => {
+                    let eventsHtml = "<ul>";
+                    data.items.forEach(event => {
+                        eventsHtml += `<li>${event.summary} on ${event.start.dateTime || event.start.date}</li>`;
+                    });
+                    eventsHtml += "</ul>";
+                    document.getElementById("calendar").innerHTML = eventsHtml;
+                })
+                .catch(error => console.error('Error loading calendar:', error));
+        }
+        
+        loadCalendar();
+    </script>
 </body>
 </html>
+
